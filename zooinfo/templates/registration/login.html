@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+<!-- берёт базовый шаблон и постовляет в нужные места - шапка ,подвал + меню-->
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<!-- определяет где будет находится содержимое страницы-->
+    <h2>Вход</h2>
+    
+    {% if form.errors %}
+        <p>логин и пароль не совпали. попробуйте еще раз.</p>
+    {% endif %}
+    
+    <!-- форма для входа -->
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %} <!-- токен для безопасности-->
+        {{ form.as_p }} 
+        
+        <!-- если всё правльно то перекинет на главную странцу -->
+        <input type="hidden" name="next" value="{{ next }}" />
+        
+        <input type="submit" value="Войти" />
+    </form>
+{% endblock %}

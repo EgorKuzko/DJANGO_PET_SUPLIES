@@ -12,12 +12,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os 
-from dotenv import load_dotenv
+from dotenv import load_dotenv # чтобы хранить пароли и всякое важное отдельно
 
-load_dotenv()
+load_dotenv()  
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent # ищет абсолютный путь к manage + нужен чтобы всё работало независимо от того где запущен проект
 
 
 # Quick-start development settings - unsuitable for production
@@ -31,20 +31,20 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 
 # какие домены разрешены для обрашения
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] 
 
 
 # Application definition
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+INSTALLED_APPS = [ # регистрация приложений
+    'django.contrib.admin', # админ панель
+    'django.contrib.auth', #  аунтификация
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalog.apps.CatalogConfig',
+    'zooinfo',
 ]
-#для работы с обеспечением
+#для работы с обеспечением - выполняются при каждом запросе и ответе - скорее всего для безопасности
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -60,8 +60,8 @@ ROOT_URLCONF = 'locallibrary.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'templates'], # ищет шаблоны везде
+        'APP_DIRS': True, # позволяет искать внутри каждого приложения
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
