@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %} 
+ <!-- берёт базовый шаблон и вставляет код в нужные места -->
+{% block content %}
+    <h1>{{ title }}</h1>
+    <!-- подтягивается из views -->
+
+    <!-- отпровляет данные обратно на сервер "" - есле пусто то отправляет на тот url + post чтобы изменять данные  -->
+    <form action="" method="post">
+        {% csrf_token %} <!-- защита от атак -->
+        
+        <!-- показывает поля форм -->
+        {{ form.as_p }} 
+        
+        <input type="submit" value="Сохранить Транзакцию" class="btn btn-primary"/>
+    </form>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Зоомагазин{% endblock %}</title>
+</head>
+<!-- самый главный шаблон-->
+<body>
+    
+    <!-- меню навигации -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'employee_home' %}">Склад</a></li>
+            <li><a href="{% url 'register_transaction' %}">Новая Транзакция</a></li>
+            {% if user.is_superuser %} <!-- проверяет что зашёл админ и показывает строку с отчётами -->
+                <li><a href="{% url 'manager_report' %}">Отчет</a></li>
+            {% endif %}
+            
+            {% if user.is_authenticated %}
+                <li>Привет, {{ user.username }}!</li>
+                <form action="{% url 'logout' %}" method="post"> 
+                    {% csrf_token %}
+                    <button type="submit">Выход</button>
+                </form>
+            {% else %}
+                <li><a href="{% url 'login' %}">Вход</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    
+    <hr>
+    
+    <!-- здесь в теории будет контет сраницы -->
+    <div id="content">
+        {% block content %}
+        <!--  -->
+        {% endblock %}
+    </div>
+    
+</body>
+</html>

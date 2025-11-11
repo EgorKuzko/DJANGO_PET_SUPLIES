@@ -1,12 +1,12 @@
 """
-WSGI config for locallibrary project.
+WSGI config for locallibrary project. 
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
-
+#помогает запустить сервер - если нету то сервер незнает какие настройки использовать и как запустить код
 import os
 
 from django.core.wsgi import get_wsgi_application

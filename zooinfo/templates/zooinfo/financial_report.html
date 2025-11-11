@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Финансовый отчет{% endblock %}
+
+{% block content %}
+    <h2>Финансовый отчет</h2>
+
+    <h3>Сводка по транзакциям:</h3>
+    <ul>
+        <li>Общая сумма продаж: <strong>{{ total_sales_sum }} BYN</strong></li> <!-- подтягивает переменные из views-->
+        <li>Общая сумма возвратов: <strong>{{ total_returns_sum }} BYN</strong></li>
+        <li>Чистая выручка: <strong>{{ net_sales }} BYN</strong></li>
+        <li>Всего единиц товара продано: <strong>{{ total_items_sold }}</strong></li>
+    </ul>
+
+    <h3>Информация по складу:</h3>
+    <ul>
+        <li>Всего товаров на складе: <strong>{{ total_stock }} шт.</strong></li>
+        <li>Количество акционных товаров в продаже: <strong>{{ on_sale_count }}</strong></li>
+    </ul>
+{% endblock %}
