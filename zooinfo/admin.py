@@ -1,7 +1,7 @@
 from django.contrib import admin # для работы с админкой
 
 # Register your models here.
-from .models import Category, Product, Transaction # мои медельки
+from .models import Category, Product, Transaction , Tag , ProductDetail # мои медельки
 
 # Регистрация модели Category
 @admin.register(Category)
@@ -20,3 +20,13 @@ class ProductAdmin(admin.ModelAdmin):
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ('product', 'transaction_type', 'quantity', 'total_amount', 'transaction_date') # название товара + возрат/продажа + количество + итоговая цена + дата транзакции
     list_filter = ('transaction_type', 'transaction_date') # фильтрует по продажам и возваратам + дата
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+
+# описание товаров
+@admin.register(ProductDetail)
+class ProductDetail(admin.ModelAdmin):
+    list_display = ('product', 'country_of_origin')
