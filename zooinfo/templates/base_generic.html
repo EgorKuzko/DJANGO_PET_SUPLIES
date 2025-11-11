@@ -18,7 +18,10 @@
             
             {% if user.is_authenticated %}
                 <li>Привет, {{ user.username }}!</li>
-                <li><a href="{% url 'logout' %}">Выход</a></li>
+                <form action="{% url 'logout' %}" method="post"> 
+                    {% csrf_token %}
+                    <button type="submit">Выход</button>
+                </form>
             {% else %}
                 <li><a href="{% url 'login' %}">Вход</a></li>
             {% endif %}

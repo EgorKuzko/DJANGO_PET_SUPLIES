@@ -5,7 +5,7 @@ from .models import Transaction, Product
 
 # регистрация - продажи и возвраты
 class TransactionForm(forms.ModelForm):
-    Product = forms.ModelChoiceField(
+    product = forms.ModelChoiceField(
         queryset=Product.objects.filter(is_active=True).order_by('name'),
         label='Товар',
         empty_label='Выберите товар',

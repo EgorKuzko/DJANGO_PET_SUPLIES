@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Список товаров на складе{% endblock %}
+
+{% block content %}
+    <h2>Товары на складе</h2>
+    
+    <table border="1" cellpadding="5" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Название товара</th>
+                <th>Цена (BYN)</th>
+                <th>Остаток</th>
+                <th>На акции</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in product_list %}
+            <tr>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stock_quantity }}</td>
+                <td>{% if product.is_on_sale %}Да{% else %}Нет{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Товаров нет</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -33,7 +33,7 @@ class ManagerRequiredMixin(UserPassesTestMixin): # проверяет что з�
 
 
 class ManagerFinancialView(LoginRequiredMixin, ManagerRequiredMixin, TemplateView):
-    template_name = 'zooinfo/manager_financial_report.html' 
+    template_name = 'zooinfo/financial_report.html' 
 
     def get_context_data(self, **kwargs): 
         context = super().get_context_data(**kwargs) # собирает переменные и передаёт в шаблон 
