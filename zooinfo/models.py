@@ -4,6 +4,18 @@ from django.db import models # импортирут все типы полей
 # ORM описание баз данных как классы питона 
 # class __ (models.Model) - класс который наследуется  , превращяется с помощью Django в таблицу в БД при миграции
 
+    
+
+class Tag(models.Model): # многие ко многим
+    name = models.CharField(max_length=50, unique=True, verbose_name="Название тега")
+    
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+        
+    def __str__(self):
+        return self.name
+    
 # 1 модель категории
 class Category(models.Model):
     """
@@ -31,7 +43,7 @@ class Product(models.Model):
     #
     category = models.ForeignKey(
         Category,
-        on_delete=models.SET_NULL, # Если удалить категорию то в товаре ставим NULL - если нет то удалятся все товары !!! WARNING !!!
+        on_delete=models.SET_NULL, # Если удалить категорию и не поставить NULL - то удалятся все товары !!! WARNING !!!
         null=True, # разрешает полю быть пустым
         verbose_name="Категория"
     )
@@ -62,6 +74,11 @@ class Product(models.Model):
         verbose_name_plural = "Товары"
         # проверяет что бы небыло одинаковых названий в одной котегории
         unique_together = ('name', 'category')
+
+    tags = models.ManyToManyField(
+        Tag, # изза того что добавил тэг в низ - тэг был невидим для товаров 
+        blank=True, # разрешает быть пустым
+        verbose_name="Теги")
 
     def __str__(self):
         return f"{self.name} ({self.category.name if self.category else 'Без категории'})"
@@ -113,3 +130,23 @@ class Transaction(models.Model):
         # product.name - название товара 
         # transaction_date - берёт дату и время и форматирует в год-месяц-день
         # это всё преобразуется в строку и можно смотреть какие транзакции были 
+
+
+class ProductDetail(models.Model): # детали продукта/описание товара - один товар одно описание
+    # попытка сделать 1-1 
+    product = models.OneToOneField(
+        Product,
+        on_delete=models.CASCADE, # если удалить товар, его детали тоже удалятся
+        primary_key=True, # Делаем эту связь первичным ключом для эффективности
+        verbose_name="Товар"
+    )
+    
+    country_of_origin = models.CharField(max_length=100, verbose_name="Производитель")
+    description = models.TextField(blank=True, verbose_name="Подробное описание")
+    
+    class Meta:
+        verbose_name = "Детали товара"
+        verbose_name_plural = "Детали товаров"
+        
+    def __str__(self):
+        return f"Описание для {self.product.name}"
